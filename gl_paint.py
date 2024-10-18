@@ -1,9 +1,12 @@
 from tkinter import *
 from tkinter import ttk
 
-LINE_LIMIT        = 20
-DEFAULT_SP_WIDTH  = 800
-DEFAULT_SP_HEIGHT = 600
+LINE_LIMIT = 20
+
+CANVAS_PADDING_NS = CANVAS_PADDING_EW = 75
+DEFAULT_SP_WIDTH  = DEFAULT_SP_HEIGHT = 500
+
+DEFAULT_LINE_WIDTH = 2
 
 class Main:
     def __init__(self):
@@ -20,7 +23,7 @@ class Main:
         self.style= ttk.Style()
         self.style.configure("Main.TFrame", background="lightgrey")
         
-        self.mainframe = ttk.Frame(self.win, padding="120 90", style="Main.TFrame")
+        self.mainframe = ttk.Frame(self.win, padding=f"{CANVAS_PADDING_NS} {CANVAS_PADDING_EW}", style="Main.TFrame")
         self.mainframe.grid(column=0, row=0, sticky="nwes")
 
         self.win.rowconfigure(0, weight=1)
@@ -32,7 +35,7 @@ class Main:
     def init_mainframe(self):
         print("Initializing mainframe widgets...")
         
-        self.canvas = Canvas(self.mainframe, height=DEFAULT_SP_HEIGHT, width=DEFAULT_SP_WIDTH, borderwidth=4, relief="groove")
+        self.canvas = Canvas(self.mainframe, width=DEFAULT_SP_WIDTH, height=DEFAULT_SP_HEIGHT, borderwidth=4, relief="groove")
         self.canvas.grid(column=0, row=0)
         
         self.init_sketchpad()
@@ -85,7 +88,7 @@ class Sketchpad:
         self.line_coords.extend([event.x, event.y])
        
         if self.pressed:
-            self.canvas.create_line(self.line_coords, width=5)
+            self.canvas.create_line(self.line_coords, width=DEFAULT_LINE_WIDTH)
             
 
 def gl_main():
