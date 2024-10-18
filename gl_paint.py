@@ -1,31 +1,79 @@
 from tkinter import *
 from tkinter import ttk
 
-# def savePosn(event):
-#     global lastx, lasty
-#     lastx, lasty = event.x, event.y
-    
-# def addLine(event):
-#     canvas.create_line((lastx, lasty, event.x, event.y), arrow="first", width=1)
-#     savePosn(event)
+LINE_LIMIT        = 20
+DEFAULT_SP_WIDTH  = 800
+DEFAULT_SP_HEIGHT = 600
 
-LINE_LIMIT = 20
+class Main:
+    def __init__(self):
+        print("Initializing main...")
+        
+        self.win = Tk()
+        self.win.title("gl-paint v0.0.1")
+        
+        self.init_toplevel()
 
+    def init_toplevel(self):
+        print("Initializing toplevel widgets...")
+        
+        self.style= ttk.Style()
+        self.style.configure("Main.TFrame", background="lightgrey")
+        
+        self.mainframe = ttk.Frame(self.win, padding="120 90", style="Main.TFrame")
+        self.mainframe.grid(column=0, row=0, sticky="nwes")
+
+        self.win.rowconfigure(0, weight=1)
+        self.win.columnconfigure(0, weight=1)
+        
+        self.init_mainframe()
+                  
+    # TODO: center canvas widget when mainframe resizes
+    def init_mainframe(self):
+        print("Initializing mainframe widgets...")
+        
+        self.canvas = Canvas(self.mainframe, height=DEFAULT_SP_HEIGHT, width=DEFAULT_SP_WIDTH, borderwidth=4, relief="groove")
+        self.canvas.grid(column=0, row=0)
+        
+        self.init_sketchpad()
+
+    def init_sketchpad(self):
+        print("Initializing sketchpad...")
+        
+        self.sp = Sketchpad(self.canvas)
+        
+        self.create_binds()
+        
+    def create_binds(self):
+        print("Creating keybinds...")
+        
+        self.canvas.bind("<Button-1>", self.sp.press)
+        self.canvas.bind("<B1-Motion>", self.sp.draw)
+        self.canvas.bind("<B1-ButtonRelease>", self.sp.unpress)
+        
+    def start(self):
+        print("Starting event loop...")
+        
+        self.win.mainloop()
+        
+        
 class Sketchpad:
     def __init__(self, canvas):
         self.line_coords = []
-        # self.pressed = False
+        self.pressed = False
         self.canvas = canvas
+        
+    def press(self, event):
+        self.line_coords.extend([event.x, event.y])
+        self.pressed = True
 
-    # def press(self, event):
-    #     self.line_coords.extend([event.x, event.y])
-    #     self.pressed = True
-
-    # def unpress(self, event):
-    #     self.line_coords = []
-    #     self.pressed = False
+    def unpress(self, event):
+        self.line_coords = []
+        self.pressed = False
 
     def draw(self, event):
+        print(self.line_coords)
+        
         if len(self.line_coords) > LINE_LIMIT:
             self.line_coords.reverse() 
 
@@ -36,31 +84,13 @@ class Sketchpad:
             
         self.line_coords.extend([event.x, event.y])
        
-        # if self.pressed:
-        self.canvas.create_line(self.line_coords, width=5)
-        
-root = Tk()
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
+        if self.pressed:
+            self.canvas.create_line(self.line_coords, width=5)
+            
 
-canvas = Canvas(root)
-canvas.grid(column=0, row=0, sticky=(N, W, E, S))
-sp = Sketchpad(canvas)
+def gl_main():
+    main = Main()
+    main.start()
 
-# canvas.bind("<Button-1>", savePosn)
-# canvas.bind("<B1-Motion>", addLine)
-
-def bm(event):
-    print("b1 motion event fired")
-
-def p(event):
-    print("press event fired")
-
-def up(event):
-    print("unpress event fired")
-    
-# root.bind("<Button-1>", sp.press)
-root.bind("<Button1-Motion>", sp.draw)
-# root.bind("<Button1-ButtonRelease>", sp.unpress)
-
-root.mainloop()
+if __name__ == '__main__':
+    gl_main()
