@@ -1,6 +1,6 @@
 # gl-paint
-A paint-like program written in Python
-The `gl` comes from my username
+A paint-like program written in Python  
+The `gl` comes from my username, `gharial`
 
 # To be implemented
 - [ ] Save work to file
@@ -20,5 +20,5 @@ The `gl` comes from my username
 - [ ] Select up to two colors at once
 
 # Info
-This is written purely in Python 3 using only the standard library, no external dependencies
+This is written purely in Python 3 using only the standard library, no external dependencies  
 The GUI has been implemented using Tkinter (with the modern, themed widgets)
