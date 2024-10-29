@@ -1,6 +1,6 @@
 # gl-paint
 A paint-like program written in Python  
-The `gl` comes from my username, `gharial`
+The `gl` comes from my username
 
 # To be implemented
 - [ ] Save work to file
