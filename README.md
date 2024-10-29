@@ -2,6 +2,13 @@
 A paint-like program written in Python  
 The `gl` comes from my username
 
+# Features
+**THIS IS A WORK-IN-PROGRESS! EXPECT MAJOR OVERHAULS!**  
+- Pencil Tool - Draw black lines
+- Eraser Tool - Erase drawings
+- Tools are currently available only in a fixed width on a canvas of pre-defined size and color
+- Canvas stays centered on window resize (not foolproof)
+
 # To be implemented
 - [ ] Save work to file
 - [ ] Open previously saved work
