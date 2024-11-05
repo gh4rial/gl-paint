@@ -11,6 +11,8 @@ DEFAULT_SP_WIDTH  = DEFAULT_SP_HEIGHT = 500
 DEFAULT_PENCIL_WIDTH = 3
 DEFAULT_ERASER_WIDTH = 30
 
+# TODO: implement mode for debugging (accessed by flag?)
+
 class Main:
     def __init__(self):
         print("Initializing main...")
@@ -100,7 +102,7 @@ class Sketchpad:
         if self.pressed:
             self.current_line['coords'].extend([event.x, event.y])
         
-            if actual_len > LINE_LIMIT:
+            if len(self.current_line['coords']) > LINE_LIMIT:
                 actual_len = len(self.current_line['coords']) - LINE_LIMIT
             else:
                 actual_len = 0
@@ -126,7 +128,15 @@ class Sketchpad:
 
         return line
 
+def info():
+    print("gl_paint v0.0.1")
+    print("  left-click to draw")
+    print("  right-click to erase")
+    print("Hit <ENTER> to continue")
+    input()
+
 def gl_main():
+    info()
     main = Main()
     main.start()
 
